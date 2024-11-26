@@ -1,0 +1,620 @@
+---
+title: "Allergy Dataset Analysis"
+output: allergy_notebook
+---
+
+Run once to have required packages:
+```{r}
+# Load required libraries
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+```
+
+
+Here is the .csv file that holds the data for our allergen analysis. The file comes from Zenodo and comes from this study:
+
+Hill DA, Grundmeier RW, Ram G, Spergel JM. The epidemiologic characteristics of healthcare provider-diagnosed eczema, asthma, allergic rhinitis, and food allergy in children: a retrospective cohort study. BMC Pediatr. 2016 Aug 20;16:133. doi: 10.1186/s12887-016-0673-z. PMID: 27542726; PMCID: PMC4992234.
+
+It analyzes about 333,000 children by birth year (starting/end age), gender, race/ethnicity, payer (if medicaid or not), allergen (start/end), and associated illnesses (eczema, asthma, and rhinitis). Removes starting age that are in the negatives
+```{r}
+# Read and examine data
+allergy_data <- read.csv("food-allergy-analysis-Zenodo.csv", stringsAsFactors = FALSE)
+
+# Define the expected levels for each factor
+gender_levels <- c("S0 - Male", "S1 - Female")
+race_levels <- c("R0 - White", "R1 - Black", "R2 - Asian or Pacific Islander", "R3 - Other", "R4 - Unknown")
+ethnicity_levels <- c("E0 - Non-Hispanic", "E1 - Hispanic")
+payer_levels <- c("P0 - Non-Medicaid", "P1 - Medicaid")
+
+# Convert to factors with explicit levels
+allergy_data <- allergy_data %>%
+  mutate(
+    GENDER_FACTOR = factor(GENDER_FACTOR, levels = gender_levels),
+    RACE_FACTOR = factor(RACE_FACTOR, levels = race_levels),
+    ETHNICITY_FACTOR = factor(ETHNICITY_FACTOR, levels = ethnicity_levels),
+    PAYER_FACTOR = factor(PAYER_FACTOR, levels = payer_levels),
+    ATOPIC_MARCH_COHORT = as.logical(ATOPIC_MARCH_COHORT)
+  ) %>%
+  # Remove rows where AGE_START_YEARS is negative
+  filter(AGE_START_YEARS >= 0) %>%
+  # Remove treenut-related columns
+  select(-matches("TREENUT"))
+
+# Verify the factor levels
+str(allergy_data)
+```
+
+```{r}
+# Create function to analyze onset patterns (START)
+analyze_onset_patterns_start <- function(df) {
+  df %>%
+    select(ends_with("_START")) %>%
+    select(-c(AGE_START_YEARS)) %>%
+    gather(key = "allergy_type", value = "onset_age") %>%
+    filter(!is.na(onset_age)) %>%
+    mutate(allergy_type = gsub("_START", "", allergy_type))
+}
+
+# Create function to analyze onset patterns (END)
+analyze_onset_patterns_end <- function(df) {
+  df %>%
+    select(ends_with("_END")) %>%
+    select(-c(AGE_START_YEARS)) %>%
+    gather(key = "allergy_type", value = "onset_age") %>%
+    filter(!is.na(onset_age)) %>%
+    mutate(allergy_type = gsub("_END", "", allergy_type))
+}
+```
+
+```{r}
+# Age distribution by start visualization (counts in thousands)
+ggplot(allergy_data, aes(x = AGE_START_YEARS)) +
+  geom_histogram(aes(y = after_stat(count) / 1000), bins = 20, fill = "blue") +
+  labs(title = "Age Distribution at Start of Observation",
+       x = "Age (Years)",
+       y = "Count (Thousands)") +
+  theme_minimal()
+
+# Age distribution by end visualization (counts in thousands)
+ggplot(allergy_data, aes(x = AGE_END_YEARS)) +
+  geom_histogram(aes(y = after_stat(count) / 1000), bins = 20, fill = "red") +
+  labs(title = "Age Distribution at End of Observation",
+       x = "Age (Years)",
+       y = "Count (Thousands)") +
+  theme_minimal()
+
+# Print range of age
+ageStart_data <- allergy_data$AGE_START_YEARS
+ageEnd_data <- allergy_data$AGE_END_YEARS
+range_age_start <- range(ageStart_data, na.rm = TRUE)
+range_age_end <- range(ageEnd_data, na.rm = TRUE)
+print(range_age_start)
+print(range_age_end)
+
+```
+
+
+```{r}
+# Create binary columns for each allergy (START)
+allergy_binary_start <- allergy_data %>%
+  mutate(across(ends_with("_START"), 
+                ~ifelse(is.na(.), 0, 1))) %>%
+  select(ends_with("_START"))
+
+# Create binary columns for each allergy (END)
+allergy_binary_end <- allergy_data %>%
+  mutate(across(ends_with("_START"), 
+                ~ifelse(is.na(.), 0, 1))) %>%
+  select(ends_with("_END"))
+
+# Calculate comorbidity correlation (START)
+allergy_correlation_start <- cor(allergy_binary)
+
+# Calculate comorbidity correlation (END)
+allergy_correlation_end <- cor(allergy_binary)
+```
+
+
+
+```{r}
+# Properly create factors with explicit levels (START)
+model_data <- allergy_data %>%
+  mutate(
+    # Create binary outcome
+    has_food_allergy = if_else(
+      rowSums(!is.na(select(., ends_with("_ALG_START")))) > 0,
+      1, 
+      0
+    ),
+    # Convert factors with explicit level preservation
+    GENDER_FACTOR = factor(GENDER_FACTOR, levels = unique(GENDER_FACTOR)),
+    RACE_FACTOR = factor(RACE_FACTOR, levels = unique(RACE_FACTOR)),
+    ETHNICITY_FACTOR = factor(ETHNICITY_FACTOR, levels = unique(ETHNICITY_FACTOR)),
+    PAYER_FACTOR = factor(PAYER_FACTOR, levels = unique(PAYER_FACTOR))
+  ) %>%
+  # Drop empty factor levels
+  droplevels()
+
+# Properly create factors with explicit levels (END)
+model_data <- allergy_data %>%
+  mutate(
+    # Create binary outcome
+    has_food_allergy = if_else(
+      rowSums(!is.na(select(., ends_with("_ALG_END")))) > 0,
+      1, 
+      0
+    ),
+    # Convert factors with explicit level preservation
+    GENDER_FACTOR = factor(GENDER_FACTOR, levels = unique(GENDER_FACTOR)),
+    RACE_FACTOR = factor(RACE_FACTOR, levels = unique(RACE_FACTOR)),
+    ETHNICITY_FACTOR = factor(ETHNICITY_FACTOR, levels = unique(ETHNICITY_FACTOR)),
+    PAYER_FACTOR = factor(PAYER_FACTOR, levels = unique(PAYER_FACTOR))
+  ) %>%
+  # Drop empty factor levels
+  droplevels()
+
+# Check factor levels after conversion (just START)
+print("Factor Levels After Conversion:")
+print(levels(model_data$GENDER_FACTOR))
+print(levels(model_data$RACE_FACTOR))
+print(levels(model_data$ETHNICITY_FACTOR))
+print(levels(model_data$PAYER_FACTOR))
+
+# Only proceed with modeling if factors have multiple levels (only START)
+valid_factors <- names(which(sapply(model_data, function(x) 
+  is.factor(x) && length(levels(x)) > 1)))
+
+if (length(valid_factors) > 0) {
+  formula_str <- paste("has_food_allergy ~", 
+                      paste(valid_factors, collapse = " + "))
+  risk_model <- glm(
+    as.formula(formula_str),
+    family = binomial(),
+    data = model_data
+  )
+  print(summary(risk_model))
+} else {
+  print("Warning: Check your data - no valid factor variables found")
+}
+```
+
+
+
+```{r}
+# Calculate prevalence of each allergy type (START)
+allergy_prevalence_start <- allergy_data %>%
+  summarise(across(ends_with("_ALG_START"), 
+                  ~sum(!is.na(.))/n())) %>%
+  gather(key = "allergy_type", value = "prevalence") %>%
+  mutate(allergy_type = gsub("_ALG_START", "", allergy_type))
+
+# Calculate prevalence of each allergy type (END)
+allergy_prevalence_end <- allergy_data %>%
+  summarise(across(ends_with("_ALG_END"), 
+                  ~sum(!is.na(.))/n())) %>%
+  gather(key = "allergy_type", value = "prevalence") %>%
+  mutate(allergy_type = gsub("_ALG_END", "", allergy_type))
+
+# Get the maximum prevalence value for consistent scaling
+max_prevalence <- max(c(allergy_prevalence_start$prevalence, 
+                       allergy_prevalence_end$prevalence))
+
+# Get consistent ordering based on START prevalence
+allergy_order <- allergy_prevalence_start %>%
+  arrange(desc(prevalence)) %>%
+  pull(allergy_type)
+
+# Create prevalence plot (START)
+ggplot(allergy_prevalence_start, 
+       aes(x = factor(allergy_type, levels = allergy_order), 
+           y = prevalence)) +
+  geom_bar(stat = "identity", fill = "red") +
+  coord_flip() +
+  theme_minimal() +
+  ylim(0, max_prevalence) +
+  labs(title = "Prevalence of Different Allergies (START)",
+       x = "Allergy Type",
+       y = "Prevalence")
+
+# Create prevalence plot (END)
+ggplot(allergy_prevalence_end, 
+       aes(x = factor(allergy_type, levels = allergy_order), 
+           y = prevalence)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  coord_flip() +
+  theme_minimal() +
+  ylim(0, max_prevalence) +
+  labs(title = "Prevalence of Different Allergies (END)",
+       x = "Allergy Type",
+       y = "Prevalence")
+```
+
+
+```{r}
+# Calculate allergen presence by gender with types (START)
+gender_allergen_analysis_start <- allergy_data %>%
+  group_by(GENDER_FACTOR) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_START))/n(),
+    egg = sum(!is.na(EGG_ALG_START))/n(),
+    milk = sum(!is.na(MILK_ALG_START))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_START))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_START))/n(),
+    fish = sum(!is.na(FISH_ALG_START))/n(),
+    soy = sum(!is.na(SOY_ALG_START))/n()
+  )
+
+# Calculate allergen presence by gender with types (END)
+gender_allergen_analysis_end <- allergy_data %>%
+  group_by(GENDER_FACTOR) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_END))/n(),
+    egg = sum(!is.na(EGG_ALG_END))/n(),
+    milk = sum(!is.na(MILK_ALG_END))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_END))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_END))/n(),
+    fish = sum(!is.na(FISH_ALG_END))/n(),
+    soy = sum(!is.na(SOY_ALG_END))/n()
+  )
+
+# Get maximum prevalence value for consistent scaling
+max_prevalence <- max(c(
+  gather(gender_allergen_analysis_start, key = "allergen", value = "prevalence", -GENDER_FACTOR)$prevalence,
+  gather(gender_allergen_analysis_end, key = "allergen", value = "prevalence", -GENDER_FACTOR)$prevalence
+))
+
+# Get consistent allergen ordering based on START prevalence
+allergen_order <- gender_allergen_analysis_start %>%
+  gather(key = "allergen", value = "prevalence", -GENDER_FACTOR) %>%
+  group_by(allergen) %>%
+  summarise(total_prev = sum(prevalence)) %>%
+  arrange(desc(total_prev)) %>%
+  pull(allergen)
+
+# Create visualization for types (START)
+ggplot(gender_allergen_analysis_start %>% 
+       gather(key = "allergen", value = "prevalence", -GENDER_FACTOR)) +
+  geom_bar(aes(x = factor(allergen, levels = allergen_order), 
+               y = prevalence, fill = GENDER_FACTOR), 
+           stat = "identity", position = "dodge") +
+  theme_minimal() +
+  ylim(0, max_prevalence) +
+  labs(title = "Allergen Prevalence by Gender (START)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Create visualization for types (END)
+ggplot(gender_allergen_analysis_end %>% 
+       gather(key = "allergen", value = "prevalence", -GENDER_FACTOR)) +
+  geom_bar(aes(x = factor(allergen, levels = allergen_order), 
+               y = prevalence, fill = GENDER_FACTOR), 
+           stat = "identity", position = "dodge") +
+  theme_minimal() +
+  ylim(0, max_prevalence) +
+  labs(title = "Allergen Prevalence by Gender (END)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+# Calculate allergen presence by race (START)
+race_allergen_analysis_start <- allergy_data %>%
+  group_by(RACE_FACTOR) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_START))/n(),
+    egg = sum(!is.na(EGG_ALG_START))/n(),
+    milk = sum(!is.na(MILK_ALG_START))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_START))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_START))/n(),
+    fish = sum(!is.na(FISH_ALG_START))/n(),
+    soy = sum(!is.na(SOY_ALG_START))/n()
+  )
+
+# Calculate allergen presence by race (END)
+race_allergen_analysis_end <- allergy_data %>%
+  group_by(RACE_FACTOR) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_END))/n(),
+    egg = sum(!is.na(EGG_ALG_END))/n(),
+    milk = sum(!is.na(MILK_ALG_END))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_END))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_END))/n(),
+    fish = sum(!is.na(FISH_ALG_END))/n(),
+    soy = sum(!is.na(SOY_ALG_END))/n()
+  )
+
+# Get maximum prevalence and consistent ordering for race
+max_prevalence_race <- max(c(
+  gather(race_allergen_analysis_start, key = "allergen", value = "prevalence", -RACE_FACTOR)$prevalence,
+  gather(race_allergen_analysis_end, key = "allergen", value = "prevalence", -RACE_FACTOR)$prevalence
+))
+
+allergen_order_race <- race_allergen_analysis_start %>%
+  gather(key = "allergen", value = "prevalence", -RACE_FACTOR) %>%
+  group_by(allergen) %>%
+  summarise(total_prev = sum(prevalence)) %>%
+  arrange(desc(total_prev)) %>%
+  pull(allergen)
+
+# Visualizations for race
+ggplot(race_allergen_analysis_start %>% 
+       gather(key = "allergen", value = "prevalence", -RACE_FACTOR)) +
+  geom_bar(aes(x = factor(allergen, levels = allergen_order_race), 
+               y = prevalence, fill = RACE_FACTOR), 
+           stat = "identity", position = "dodge") +
+  theme_minimal() +
+  ylim(0, max_prevalence_race) +
+  labs(title = "Allergen Prevalence by Race (START)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggplot(race_allergen_analysis_end %>% 
+       gather(key = "allergen", value = "prevalence", -RACE_FACTOR)) +
+  geom_bar(aes(x = factor(allergen, levels = allergen_order_race), 
+               y = prevalence, fill = RACE_FACTOR), 
+           stat = "identity", position = "dodge") +
+  theme_minimal() +
+  ylim(0, max_prevalence_race) +
+  labs(title = "Allergen Prevalence by Race (END)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Calculate allergen presence by ethnicity (START and END)
+ethnicity_allergen_analysis_start <- allergy_data %>%
+  group_by(ETHNICITY_FACTOR) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_START))/n(),
+    egg = sum(!is.na(EGG_ALG_START))/n(),
+    milk = sum(!is.na(MILK_ALG_START))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_START))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_START))/n(),
+    fish = sum(!is.na(FISH_ALG_START))/n(),
+    soy = sum(!is.na(SOY_ALG_START))/n()
+  )
+
+ethnicity_allergen_analysis_end <- allergy_data %>%
+  group_by(ETHNICITY_FACTOR) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_END))/n(),
+    egg = sum(!is.na(EGG_ALG_END))/n(),
+    milk = sum(!is.na(MILK_ALG_END))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_END))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_END))/n(),
+    fish = sum(!is.na(FISH_ALG_END))/n(),
+    soy = sum(!is.na(SOY_ALG_END))/n()
+  )
+
+# Get maximum prevalence and consistent ordering for ethnicity
+max_prevalence_ethnicity <- max(c(
+  gather(ethnicity_allergen_analysis_start, key = "allergen", value = "prevalence", -ETHNICITY_FACTOR)$prevalence,
+  gather(ethnicity_allergen_analysis_end, key = "allergen", value = "prevalence", -ETHNICITY_FACTOR)$prevalence
+))
+
+allergen_order_ethnicity <- ethnicity_allergen_analysis_start %>%
+  gather(key = "allergen", value = "prevalence", -ETHNICITY_FACTOR) %>%
+  group_by(allergen) %>%
+  summarise(total_prev = sum(prevalence)) %>%
+  arrange(desc(total_prev)) %>%
+  pull(allergen)
+
+# Visualizations for ethnicity
+ggplot(ethnicity_allergen_analysis_start %>% 
+       gather(key = "allergen", value = "prevalence", -ETHNICITY_FACTOR)) +
+  geom_bar(aes(x = factor(allergen, levels = allergen_order_ethnicity), 
+               y = prevalence, fill = ETHNICITY_FACTOR), 
+           stat = "identity", position = "dodge") +
+  theme_minimal() +
+  ylim(0, max_prevalence_ethnicity) +
+  labs(title = "Allergen Prevalence by Ethnicity (START)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggplot(ethnicity_allergen_analysis_end %>% 
+       gather(key = "allergen", value = "prevalence", -ETHNICITY_FACTOR)) +
+  geom_bar(aes(x = factor(allergen, levels = allergen_order_ethnicity), 
+               y = prevalence, fill = ETHNICITY_FACTOR), 
+           stat = "identity", position = "dodge") +
+  theme_minimal() +
+  ylim(0, max_prevalence_ethnicity) +
+  labs(title = "Allergen Prevalence by Ethnicity (END)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+# Calculate allergen presence by payer status (START)
+payer_allergen_analysis_start <- allergy_data %>%
+  group_by(PAYER_FACTOR) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_START))/n(),
+    egg = sum(!is.na(EGG_ALG_START))/n(),
+    milk = sum(!is.na(MILK_ALG_START))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_START))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_START))/n(),
+    fish = sum(!is.na(FISH_ALG_START))/n(),
+    soy = sum(!is.na(SOY_ALG_START))/n()
+  )
+
+# Calculate allergen presence by payer status (END)
+payer_allergen_analysis_end <- allergy_data %>%
+  group_by(PAYER_FACTOR) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_END))/n(),
+    egg = sum(!is.na(EGG_ALG_END))/n(),
+    milk = sum(!is.na(MILK_ALG_END))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_END))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_END))/n(),
+    fish = sum(!is.na(FISH_ALG_END))/n(),
+    soy = sum(!is.na(SOY_ALG_END))/n()
+  )
+
+# Get maximum prevalence and consistent ordering
+max_prevalence_payer <- max(c(
+  gather(payer_allergen_analysis_start, key = "allergen", value = "prevalence", -PAYER_FACTOR)$prevalence,
+  gather(payer_allergen_analysis_end, key = "allergen", value = "prevalence", -PAYER_FACTOR)$prevalence
+))
+
+allergen_order_payer <- payer_allergen_analysis_start %>%
+  gather(key = "allergen", value = "prevalence", -PAYER_FACTOR) %>%
+  group_by(allergen) %>%
+  summarise(total_prev = sum(prevalence)) %>%
+  arrange(desc(total_prev)) %>%
+  pull(allergen)
+
+# Create visualization (START)
+ggplot(payer_allergen_analysis_start %>% 
+       gather(key = "allergen", value = "prevalence", -PAYER_FACTOR)) +
+  geom_bar(aes(x = factor(allergen, levels = allergen_order_payer), 
+               y = prevalence, fill = PAYER_FACTOR), 
+           stat = "identity", position = "dodge") +
+  theme_minimal() +
+  ylim(0, max_prevalence_payer) +
+  labs(title = "Allergen Prevalence by Medicaid Status (START)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Create visualization (END)
+ggplot(payer_allergen_analysis_end %>% 
+       gather(key = "allergen", value = "prevalence", -PAYER_FACTOR)) +
+  geom_bar(aes(x = factor(allergen, levels = allergen_order_payer), 
+               y = prevalence, fill = PAYER_FACTOR), 
+           stat = "identity", position = "dodge") +
+  theme_minimal() +
+  ylim(0, max_prevalence_payer) +
+  labs(title = "Allergen Prevalence by Medicaid Status (END)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+```{r}
+# List of allergens
+allergens <- c("PEANUT", "EGG", "MILK", "WHEAT", "SHELLFISH", "FISH", "SOY")
+
+# Function to create a plot for a single allergen with trend line
+create_allergen_plot <- function(allergen) {
+  allergy_data %>%
+    group_by(BIRTH_YEAR) %>%
+    summarise(prevalence = sum(!is.na(get(paste0(allergen, "_ALG_END"))))/n()) %>%
+    ggplot(aes(x = BIRTH_YEAR, y = prevalence)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = TRUE) +  # Add trend line with confidence interval
+    theme_minimal() +
+    labs(title = paste(allergen, "Allergy Prevalence by Birth Year"),
+         x = "Birth Year",
+         y = "Prevalence") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+# Create and display plots
+allergen_plots <- lapply(allergens, create_allergen_plot)
+for (plot in allergen_plots) {
+  print(plot)
+}
+```
+
+
+```{r}
+# Calculate asthma and allergen presence for START and END
+asthma_allergen_analysis_start <- allergy_data %>%
+  mutate(
+    has_asthma = !is.na(ASTHMA_START),
+    has_allergen = rowSums(!is.na(select(., ends_with("_ALG_START")))) > 0
+  ) %>%
+  group_by(has_asthma) %>%
+  summarise(
+    allergen_presence = mean(has_allergen),
+    count = n(),
+    .groups = 'drop'
+  )
+
+asthma_allergen_analysis_end <- allergy_data %>%
+  mutate(
+    has_asthma = !is.na(ASTHMA_END),
+    has_allergen = rowSums(!is.na(select(., ends_with("_ALG_END")))) > 0
+  ) %>%
+  group_by(has_asthma) %>%
+  summarise(
+    allergen_presence = mean(has_allergen),
+    count = n(),
+    .groups = 'drop'
+  )
+
+# Create visualizations for START and END
+ggplot(asthma_allergen_analysis_start, 
+       aes(x = factor(has_asthma), y = allergen_presence)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  theme_minimal() +
+  labs(title = "Allergen Presence by Asthma Status (START)",
+       x = "Has Asthma",
+       y = "Proportion with Allergens") +
+  scale_y_continuous(labels = scales::percent)
+
+ggplot(asthma_allergen_analysis_end, 
+       aes(x = factor(has_asthma), y = allergen_presence)) +
+  geom_bar(stat = "identity", fill = "darkblue") +
+  theme_minimal() +
+  labs(title = "Allergen Presence by Asthma Status (END)",
+       x = "Has Asthma",
+       y = "Proportion with Allergens") +
+  scale_y_continuous(labels = scales::percent)
+
+# Detailed allergen breakdown for asthma patients (START)
+asthma_specific_allergens_start <- allergy_data %>%
+  filter(!is.na(ASTHMA_START)) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_START))/n(),
+    egg = sum(!is.na(EGG_ALG_START))/n(),
+    milk = sum(!is.na(MILK_ALG_START))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_START))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_START))/n(),
+    fish = sum(!is.na(FISH_ALG_START))/n(),
+    soy = sum(!is.na(SOY_ALG_START))/n()
+  ) %>%
+  gather(key = "allergen", value = "prevalence")
+
+# Detailed allergen breakdown for asthma patients (END)
+asthma_specific_allergens_end <- allergy_data %>%
+  filter(!is.na(ASTHMA_END)) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_END))/n(),
+    egg = sum(!is.na(EGG_ALG_END))/n(),
+    milk = sum(!is.na(MILK_ALG_END))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_END))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_END))/n(),
+    fish = sum(!is.na(FISH_ALG_END))/n(),
+    soy = sum(!is.na(SOY_ALG_END))/n()
+  ) %>%
+  gather(key = "allergen", value = "prevalence")
+
+# Create visualizations for specific allergens (START and END)
+ggplot(asthma_specific_allergens_start, 
+       aes(x = reorder(allergen, prevalence), y = prevalence)) +
+  geom_bar(stat = "identity", fill = "darkred") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Allergen Distribution in Asthma Patients (START)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  scale_y_continuous(labels = scales::percent)
+
+ggplot(asthma_specific_allergens_end, 
+       aes(x = reorder(allergen, prevalence), y = prevalence)) +
+  geom_bar(stat = "identity", fill = "maroon") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Allergen Distribution in Asthma Patients (END)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  scale_y_continuous(labels = scales::percent)
+```
+
