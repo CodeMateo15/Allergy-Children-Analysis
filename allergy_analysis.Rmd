@@ -54,7 +54,7 @@ str(allergy_data)
 
 # Results
 
-This code creates two histograms showing the age distribution of patients at the start (in blue) and end (in red) of the observation period, with counts displayed in thousands. It also calculates seperately the minimum and maximum ages for both timepoints.
+This code creates two histograms showing the age distribution of patients at the start (in blue) and end (in red) of the observation period, with counts displayed in thousands. It also calculates separately the minimum and maximum ages for both time points.
 
 ```{r}
 # Age distribution by start visualization (counts in thousands)
@@ -81,6 +81,7 @@ range_age_end <- range(ageEnd_data, na.rm = TRUE)
 print(range_age_start)
 print(range_age_end)
 ```
+
 This code calculates and visualizes the prevalence of different allergies at both the start and end of the observation period, creating two bar plots (red for start, blue for end) with consistent y-axis scaling and ordering of allergens based on their initial prevalence, allowing for direct comparison of how allergy patterns change over time.
 
 ```{r}
@@ -131,7 +132,9 @@ ggplot(allergy_prevalence_end,
        x = "Allergy Type",
        y = "Prevalence")
 ```
-This code creates a correlation matrix heatmap showing pairwise relationships between different food allergens, where blue indicates negative correlation, white indicates no correlation, and red indicates positive correlation, with correlation coefficients displayed numerically on the visualization. For the second part, the code calculates and visualizes how often pairs of allergies occur together in children (like milk with egg, or fish with shellfish), displaying the results as a horizontal bar chart with the most frequent combinations at the top. While the heatmap shows correlation coefficients between all possible allergy pairs (with values from -1 to 1), the bar chart specifically quantifies how often selected allergy pairs appear together in patients
+
+This code creates a correlation matrix heat map showing pairwise relationships between different food allergens, where blue indicates negative correlation, white indicates no correlation, and red indicates positive correlation, with correlation coefficients displayed numerically on the visualization. For the second part, the code calculates and visualizes how often pairs of allergies occur together in children (like milk with egg, or fish with shellfish), displaying the results as a horizontal bar chart with the most frequent combinations at the top. While the heat map shows correlation coefficients between all possible allergy pairs (with values from -1 to 1), the bar chart specifically quantifies how often selected allergy pairs appear together in patients
+
 ```{r}
 # Create binary columns for each allergy with cleaner names
 allergy_binary <- allergy_data %>%
@@ -176,6 +179,8 @@ allergy_pairs %>%
        x = "Allergy Pair",
        y = "Co-occurrence Frequency")
 ```
+
+This code calculates and visualizes the prevalence of different allergies by gender at both the start and end of the observation period, creating side-by-side bar charts that show how allergy patterns differ between males and females, with consistent scaling and ordering of allergens based on their initial prevalence.
 
 ```{r}
 # Calculate allergen presence by gender with types (START)
@@ -656,6 +661,7 @@ ggplot(rhinitis_allergen_analysis_end,
        y = "Prevalence") +
   scale_y_continuous(labels = scales::percent)
 ```
+
 # Conclusion
 
 # References
