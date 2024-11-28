@@ -1,5 +1,6 @@
 ---
 title: "Trends with Food Allergies, Asthma, and Allergic Rhinitis"
+author: "Mateo Biggs"
 output: allergy_notebook
 ---
 
@@ -249,6 +250,7 @@ ggplot(gender_allergen_analysis_end %>%
        y = "Prevalence") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
 This code calculates and visualizes the prevalence of different allergies at both the start and end of the observation period, creating bar charts that show how allergy patterns vary by race (White, Black, Asian/Pacific Islander, Other, Unknown) and ethnicity (Hispanic, Non-Hispanic). It keeps consistency with scaling and ordering of allergens based on their initial prevalence.
 
 ```{r}
@@ -379,6 +381,7 @@ ggplot(ethnicity_allergen_analysis_end %>%
        y = "Prevalence") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
 This code calculates and visualizes the prevalence of different allergies between Medicaid and non-Medicaid patients at both the start and end of the observation period, creating side-by-side bar charts that show how allergy patterns differ based on insurance status. It keeps consistency with scaling and ordering of allergens based on their initial prevalence.
 
 ```{r}
@@ -447,8 +450,8 @@ ggplot(payer_allergen_analysis_end %>%
        y = "Prevalence") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
-This code creates individual scatter plots for each type of allergy (peanut, egg, milk, etc.) showing how their prevalence changes across different birth years, with each plot including a linear trend line and confidence interval to visualize the overall pattern of allergy rates over time.
 
+This code creates individual scatter plots for each type of allergy (peanut, egg, milk, etc.) showing how their prevalence changes across different birth years, with each plot including a linear trend line and confidence interval to visualize the overall pattern of allergy rates over time.
 
 ```{r}
 # List of allergens
@@ -475,6 +478,7 @@ for (plot in allergen_plots) {
   print(plot)
 }
 ```
+
 This code analyzes and visualizes the relationship between asthma and allergies at the end of the observation period in two ways: first by showing the overall proportion of allergens in asthma vs non-asthma patients, and then breaking down the specific types of allergies present in asthma patients, with both visualizations using percentage scales for clear interpretation.
 
 ```{r}
@@ -580,6 +584,33 @@ ggplot(rhinitis_allergen_analysis_end,
 ```
 
 # Conclusion
+
+The analysis of food allergies and their relationships reveals several key findings:
+
+### Overall Prevalence Patterns
+
+The prevalence analysis shows peanut allergies are most common (\>0.02 prevalence), followed by milk and egg allergies, while Brazil nut and other tree nut allergies show the lowest prevalence (\<0.005). This hierarchy of allergen prevalence remains somewhat consistent from start to end of observation.
+
+### Demographic Distribution
+
+- Males show consistently higher prevalence of all food allergies compared to females 
+- Asian/Pacific Islander populations show notably higher rates of egg and milk allergies (around 0.02 prevalence differene) compared to other racial groups 
+- Racial disparities are particularly evident in egg allergies, where Asian/Pacific Islanders show significantly higher prevalence than the rest of the population
+
+### Temporal Trends
+
+The allergy prevalence analysis by birth year shows a clear upward trend from 1980's through the 2010's, with prevalence increasing from nearly 0 to upwards of 0.025, suggesting environmental or diagnostic factors may be influencing allergy development over time.
+
+### Clinical Implications
+
+These findings support the original conclusions while adding new insights:
+
+-   Food allergy prevalence matches previous estimates.
+-   Higher rates of peanut, milk, egg, shellfish, and soy allergies than prior studies
+-   Food allergies has a connection to respiratory allergy risks
+-   The data supports targeted screening strategies, particularly for: Male patients, Asian/Pacific Islander populations, patients born in more recent years, and those with multiple allergies
+
+This analysis provides valuable insights for healthcare providers in predicting allergy patterns and managing patient care, particularly in identifying high-risk populations.
 
 # References
 
