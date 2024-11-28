@@ -1,0 +1,1075 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Trends with Food Allergies, Asthma, and Allergic Rhinitis in Children},
+  pdfauthor={Mateo Biggs},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Trends with Food Allergies, Asthma, and Allergic Rhinitis in
+Children}
+\author{Mateo Biggs}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}\label{introduction}
+
+Food allergies are a growing public health concern, particularly among
+children, where their prevalence has been steadily increasing in recent
+decades. This report analyzes a large data set of over 330,000 pediatric
+medical records to uncover trends in food allergies, asthma, and
+allergic rhinitis. By identifying common allergens and tracking their
+prevalence over time, the analysis aims to shed light on potential
+causes, demographic patterns, and the broader impact of food allergies
+on children's health. These insights can inform future research,
+healthcare interventions, and policy decisions.
+
+\section{Methodology}\label{methodology}
+
+\begin{itemize}
+\tightlist
+\item
+  Data Source: Data set from
+  \href{https://zenodo.org/records/44529}{Zenodo} containing +330,000
+  children medical records from The Children's Hospital of Philadelphia.
+\item
+  Tools: R Studio, \texttt{tidyverse}, \texttt{lubridate},
+  \texttt{ggplot2}, \texttt{corrplot}.
+\item
+  Steps: Data cleaning, visualization, statistical analysis.
+\end{itemize}
+
+Run once to have required packages:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load required libraries}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.4     v readr     2.1.5
+## v forcats   1.0.0     v stringr   1.5.1
+## v ggplot2   3.5.1     v tibble    3.2.1
+## v lubridate 1.9.3     v tidyr     1.3.1
+## v purrr     1.0.2     
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lubridate)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+Here is the .csv file that holds the data for our allergen analysis. The
+file comes from \href{https://zenodo.org/records/44529}{Zenodo}, and it
+analyzes about 333,000 children by birth year (starting/end age),
+gender, race/ethnicity, payer (if medicaid or not), allergen
+(start/end), and associated illnesses (eczema, asthma, and rhinitis).
+Removes starting age that are in the negatives and the tree nut allergen
+as it is an outlier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Read and examine data}
+\NormalTok{allergy\_data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"food{-}allergy{-}analysis{-}Zenodo.csv"}\NormalTok{, }\AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\# Define the expected levels for each factor}
+\NormalTok{gender\_levels }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"S0 {-} Male"}\NormalTok{, }\StringTok{"S1 {-} Female"}\NormalTok{)}
+\NormalTok{race\_levels }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"R0 {-} White"}\NormalTok{, }\StringTok{"R1 {-} Black"}\NormalTok{, }\StringTok{"R2 {-} Asian or Pacific Islander"}\NormalTok{, }\StringTok{"R3 {-} Other"}\NormalTok{, }\StringTok{"R4 {-} Unknown"}\NormalTok{)}
+\NormalTok{ethnicity\_levels }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"E0 {-} Non{-}Hispanic"}\NormalTok{, }\StringTok{"E1 {-} Hispanic"}\NormalTok{)}
+\NormalTok{payer\_levels }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"P0 {-} Non{-}Medicaid"}\NormalTok{, }\StringTok{"P1 {-} Medicaid"}\NormalTok{)}
+
+\CommentTok{\# Convert to factors with explicit levels}
+\NormalTok{allergy\_data }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{GENDER\_FACTOR =} \FunctionTok{factor}\NormalTok{(GENDER\_FACTOR, }\AttributeTok{levels =}\NormalTok{ gender\_levels),}
+    \AttributeTok{RACE\_FACTOR =} \FunctionTok{factor}\NormalTok{(RACE\_FACTOR, }\AttributeTok{levels =}\NormalTok{ race\_levels),}
+    \AttributeTok{ETHNICITY\_FACTOR =} \FunctionTok{factor}\NormalTok{(ETHNICITY\_FACTOR, }\AttributeTok{levels =}\NormalTok{ ethnicity\_levels),}
+    \AttributeTok{PAYER\_FACTOR =} \FunctionTok{factor}\NormalTok{(PAYER\_FACTOR, }\AttributeTok{levels =}\NormalTok{ payer\_levels),}
+    \AttributeTok{ATOPIC\_MARCH\_COHORT =} \FunctionTok{as.logical}\NormalTok{(ATOPIC\_MARCH\_COHORT)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Remove rows where AGE\_START\_YEARS is negative}
+  \FunctionTok{filter}\NormalTok{(AGE\_START\_YEARS }\SpecialCharTok{\textgreater{}=} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Remove treenut{-}related columns}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{matches}\NormalTok{(}\StringTok{"TREENUT"}\NormalTok{))}
+
+\CommentTok{\# Verify the factor levels}
+\FunctionTok{str}\NormalTok{(allergy\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    333175 obs. of  48 variables:
+##  $ SUBJECT_ID             : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ BIRTH_YEAR             : int  2006 1994 2006 2004 2006 2006 2006 2006 2006 2006 ...
+##  $ GENDER_FACTOR          : Factor w/ 2 levels "S0 - Male","S1 - Female": 2 2 1 1 2 1 2 2 1 2 ...
+##  $ RACE_FACTOR            : Factor w/ 5 levels "R0 - White","R1 - Black",..: 2 1 1 5 2 1 1 2 1 2 ...
+##  $ ETHNICITY_FACTOR       : Factor w/ 2 levels "E0 - Non-Hispanic",..: 1 1 2 2 1 1 1 1 1 1 ...
+##  $ PAYER_FACTOR           : Factor w/ 2 levels "P0 - Non-Medicaid",..: 2 1 1 1 1 2 1 1 1 2 ...
+##  $ ATOPIC_MARCH_COHORT    : logi  FALSE FALSE TRUE FALSE FALSE FALSE ...
+##  $ AGE_START_YEARS        : num  0.0931 12.2327 0.011 2.3984 0.0137 ...
+##  $ AGE_END_YEARS          : num  3.16 18.88 6.73 9.11 6.19 ...
+##  $ SHELLFISH_ALG_START    : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ SHELLFISH_ALG_END      : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ FISH_ALG_START         : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ FISH_ALG_END           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ MILK_ALG_START         : num  NA NA 1 NA NA ...
+##  $ MILK_ALG_END           : num  NA NA 1 NA NA ...
+##  $ SOY_ALG_START          : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ SOY_ALG_END            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ EGG_ALG_START          : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ EGG_ALG_END            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ WHEAT_ALG_START        : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ WHEAT_ALG_END          : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ PEANUT_ALG_START       : num  NA NA NA NA NA ...
+##  $ PEANUT_ALG_END         : num  NA NA NA NA NA ...
+##  $ SESAME_ALG_START       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ SESAME_ALG_END         : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ WALNUT_ALG_START       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ WALNUT_ALG_END         : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ PECAN_ALG_START        : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ PECAN_ALG_END          : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ PISTACH_ALG_START      : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ PISTACH_ALG_END        : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ ALMOND_ALG_START       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ ALMOND_ALG_END         : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ BRAZIL_ALG_START       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ BRAZIL_ALG_END         : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ HAZELNUT_ALG_START     : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ HAZELNUT_ALG_END       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ CASHEW_ALG_START       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ CASHEW_ALG_END         : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ ATOPIC_DERM_START      : num  NA NA 4.88 NA NA ...
+##  $ ATOPIC_DERM_END        : num  NA NA NA NA NA ...
+##  $ ALLERGIC_RHINITIS_START: num  NA NA 3.92 NA NA ...
+##  $ ALLERGIC_RHINITIS_END  : num  NA NA 6.16 NA NA ...
+##  $ ASTHMA_START           : num  NA NA 5.13 NA NA ...
+##  $ ASTHMA_END             : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ FIRST_ASTHMARX         : num  NA 12.3 1.4 NA NA ...
+##  $ LAST_ASTHMARX          : num  NA 18.88 6.16 NA NA ...
+##  $ NUM_ASTHMARX           : int  NA 2 4 NA NA NA NA NA NA NA ...
+\end{verbatim}
+
+\section{Results}\label{results}
+
+This code creates two histograms showing the age distribution of
+patients at the start (in blue) and end (in red) of the observation
+period, with counts displayed in thousands. It also calculates
+separately the minimum and maximum ages for both time points.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Age distribution by start visualization (counts in thousands)}
+\FunctionTok{ggplot}\NormalTok{(allergy\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ AGE\_START\_YEARS)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(count) }\SpecialCharTok{/} \DecValTok{1000}\NormalTok{), }\AttributeTok{bins =} \DecValTok{20}\NormalTok{, }\AttributeTok{fill =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Age Distribution at Start of Observation"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Age (Years)"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Count (Thousands)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Age distribution by end visualization (counts in thousands)}
+\FunctionTok{ggplot}\NormalTok{(allergy\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ AGE\_END\_YEARS)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(count) }\SpecialCharTok{/} \DecValTok{1000}\NormalTok{), }\AttributeTok{bins =} \DecValTok{20}\NormalTok{, }\AttributeTok{fill =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Age Distribution at End of Observation"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Age (Years)"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Count (Thousands)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-3-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Print range of age}
+\NormalTok{ageStart\_data }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data}\SpecialCharTok{$}\NormalTok{AGE\_START\_YEARS}
+\NormalTok{ageEnd\_data }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data}\SpecialCharTok{$}\NormalTok{AGE\_END\_YEARS}
+\NormalTok{range\_age\_start }\OtherTok{\textless{}{-}} \FunctionTok{range}\NormalTok{(ageStart\_data, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{range\_age\_end }\OtherTok{\textless{}{-}} \FunctionTok{range}\NormalTok{(ageEnd\_data, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(range\_age\_start)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  0.00000 17.98494
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(range\_age\_end)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1.002053 18.997947
+\end{verbatim}
+
+This code calculates and visualizes the prevalence of different
+allergies at both the start and end of the observation period, creating
+two bar plots (red for start, blue for end) with consistent y-axis
+scaling and ordering of allergens based on their initial prevalence,
+allowing for direct comparison of how allergy patterns change over time.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate prevalence of each allergy type (START)}
+\NormalTok{allergy\_prevalence\_start }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_ALG\_START"}\NormalTok{), }
+                  \SpecialCharTok{\textasciitilde{}}\FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(.))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{())) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergy\_type"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{allergy\_type =} \FunctionTok{gsub}\NormalTok{(}\StringTok{"\_ALG\_START"}\NormalTok{, }\StringTok{""}\NormalTok{, allergy\_type))}
+
+\CommentTok{\# Calculate prevalence of each allergy type (}\RegionMarkerTok{END}\CommentTok{)}
+\NormalTok{allergy\_prevalence\_end }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_ALG\_END"}\NormalTok{), }
+                  \SpecialCharTok{\textasciitilde{}}\FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(.))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{())) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergy\_type"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{allergy\_type =} \FunctionTok{gsub}\NormalTok{(}\StringTok{"\_ALG\_END"}\NormalTok{, }\StringTok{""}\NormalTok{, allergy\_type))}
+
+\CommentTok{\# Get the maximum prevalence value for consistent scaling}
+\NormalTok{max\_prevalence }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{c}\NormalTok{(allergy\_prevalence\_start}\SpecialCharTok{$}\NormalTok{prevalence, }
+\NormalTok{                       allergy\_prevalence\_end}\SpecialCharTok{$}\NormalTok{prevalence))}
+
+\CommentTok{\# Get consistent ordering based on START prevalence}
+\NormalTok{allergy\_order }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_prevalence\_start }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(prevalence)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{(allergy\_type)}
+
+\CommentTok{\# Create prevalence plot (START)}
+\FunctionTok{ggplot}\NormalTok{(allergy\_prevalence\_start, }
+       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(allergy\_type, }\AttributeTok{levels =}\NormalTok{ allergy\_order), }
+           \AttributeTok{y =}\NormalTok{ prevalence)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, max\_prevalence) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Prevalence of Different Allergies (START)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergy Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create prevalence plot (}\RegionMarkerTok{END}\CommentTok{)}
+\FunctionTok{ggplot}\NormalTok{(allergy\_prevalence\_end, }
+       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(allergy\_type, }\AttributeTok{levels =}\NormalTok{ allergy\_order), }
+           \AttributeTok{y =}\NormalTok{ prevalence)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, max\_prevalence) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Prevalence of Different Allergies (END)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergy Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-4-2.pdf}
+
+This code creates a correlation matrix heat map showing pairwise
+relationships between different food allergens, where blue indicates
+negative correlation, white indicates no correlation, and red indicates
+positive correlation, with correlation coefficients displayed
+numerically on the visualization. For the second part, the code
+calculates and visualizes how often pairs of allergies occur together in
+children (like milk with egg, or fish with shellfish), displaying the
+results as a horizontal bar chart with the most frequent combinations at
+the top. While the heat map shows correlation coefficients between all
+possible allergy pairs (with values from -1 to 1), the bar chart
+specifically quantifies how often selected allergy pairs appear together
+in patients
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create binary columns for each allergy with cleaner names}
+\NormalTok{allergy\_binary }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_ALG\_START"}\NormalTok{),}
+         \SpecialCharTok{\textasciitilde{}}\FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(.), }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_ALG\_START"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename\_with}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{str\_remove}\NormalTok{(., }\StringTok{"\_ALG\_START"}\NormalTok{))}
+
+\CommentTok{\# Calculate and visualize correlation matrix}
+\FunctionTok{library}\NormalTok{(corrplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## corrplot 0.95 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{allergy\_correlation }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(allergy\_binary)}
+\FunctionTok{corrplot}\NormalTok{(allergy\_correlation, }
+         \AttributeTok{method =} \StringTok{"color"}\NormalTok{,}
+         \AttributeTok{type =} \StringTok{"upper"}\NormalTok{,}
+         \AttributeTok{tl.col =} \StringTok{"black"}\NormalTok{,}
+         \AttributeTok{addCoef.col =} \StringTok{"black"}\NormalTok{,}
+         \AttributeTok{number.cex =} \FloatTok{0.7}\NormalTok{,       }
+         \AttributeTok{tl.srt =} \DecValTok{45}\NormalTok{,            }
+         \AttributeTok{tl.cex =} \FloatTok{0.8}\NormalTok{,     }
+         \AttributeTok{col =} \FunctionTok{colorRampPalette}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"\#4575B4"}\NormalTok{, }\StringTok{"white"}\NormalTok{, }\StringTok{"\#D73027"}\NormalTok{))(}\DecValTok{100}\NormalTok{),  }
+         \AttributeTok{diag =} \ConstantTok{FALSE}\NormalTok{)          }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate co{-}occurrence frequencies}
+\NormalTok{allergy\_pairs }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_binary }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{milk\_egg =} \FunctionTok{sum}\NormalTok{(MILK }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&}\NormalTok{ EGG }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk\_soy =} \FunctionTok{sum}\NormalTok{(MILK }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&}\NormalTok{ SOY }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{peanut\_egg =} \FunctionTok{sum}\NormalTok{(PEANUT }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&}\NormalTok{ EGG }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{peanut\_pistachio =} \FunctionTok{sum}\NormalTok{(PEANUT }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&}\NormalTok{ PISTACH }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish\_shellfish =} \FunctionTok{sum}\NormalTok{(FISH }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&}\NormalTok{ SHELLFISH }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish\_pecan =} \FunctionTok{sum}\NormalTok{(FISH }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&}\NormalTok{ PECAN }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  )}
+
+\CommentTok{\# Visualize co{-}occurrence}
+\NormalTok{allergy\_pairs }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"pair"}\NormalTok{, }\AttributeTok{value =} \StringTok{"frequency"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(pair, frequency), }\AttributeTok{y =}\NormalTok{ frequency)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"steelblue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Examples of Allergy Co{-}occurrence Frequency"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergy Pair"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Co{-}occurrence Frequency"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-5-2.pdf}
+
+This code calculates and visualizes the prevalence of different
+allergies by gender at both the start and end of the observation period,
+creating side-by-side bar charts that show how allergy patterns differ
+between males and females, with consistent scaling and ordering of
+allergens based on their initial prevalence.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate allergen presence by gender with types (START)}
+\NormalTok{gender\_allergen\_analysis\_start }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(GENDER\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{peanut =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(PEANUT\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{egg =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGG\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(MILK\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{wheat =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(WHEAT\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{shellfish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SHELLFISH\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FISH\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{soy =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SOY\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  )}
+
+\CommentTok{\# Calculate allergen presence by gender with types (}\RegionMarkerTok{END}\CommentTok{)}
+\NormalTok{gender\_allergen\_analysis\_end }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(GENDER\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{peanut =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(PEANUT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{egg =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGG\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(MILK\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{wheat =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(WHEAT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{shellfish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SHELLFISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{soy =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SOY\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  )}
+
+\CommentTok{\# Get maximum prevalence value for consistent scaling}
+\NormalTok{max\_prevalence }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
+  \FunctionTok{gather}\NormalTok{(gender\_allergen\_analysis\_start, }\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{GENDER\_FACTOR)}\SpecialCharTok{$}\NormalTok{prevalence,}
+  \FunctionTok{gather}\NormalTok{(gender\_allergen\_analysis\_end, }\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{GENDER\_FACTOR)}\SpecialCharTok{$}\NormalTok{prevalence}
+\NormalTok{))}
+
+\CommentTok{\# Get consistent allergen ordering based on START prevalence}
+\NormalTok{allergen\_order }\OtherTok{\textless{}{-}}\NormalTok{ gender\_allergen\_analysis\_start }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{GENDER\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(allergen) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_prev =} \FunctionTok{sum}\NormalTok{(prevalence)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(total\_prev)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{(allergen)}
+
+\CommentTok{\# Create visualization for types (START)}
+\FunctionTok{ggplot}\NormalTok{(gender\_allergen\_analysis\_start }\SpecialCharTok{\%\textgreater{}\%} 
+       \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{GENDER\_FACTOR)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(allergen, }\AttributeTok{levels =}\NormalTok{ allergen\_order), }
+               \AttributeTok{y =}\NormalTok{ prevalence, }\AttributeTok{fill =}\NormalTok{ GENDER\_FACTOR), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, max\_prevalence) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Prevalence by Gender (START)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergen Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create visualization for types (}\RegionMarkerTok{END}\CommentTok{)}
+\FunctionTok{ggplot}\NormalTok{(gender\_allergen\_analysis\_end }\SpecialCharTok{\%\textgreater{}\%} 
+       \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{GENDER\_FACTOR)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(allergen, }\AttributeTok{levels =}\NormalTok{ allergen\_order), }
+               \AttributeTok{y =}\NormalTok{ prevalence, }\AttributeTok{fill =}\NormalTok{ GENDER\_FACTOR), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, max\_prevalence) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Prevalence by Gender (END)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergen Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+This code calculates and visualizes the prevalence of different
+allergies at both the start and end of the observation period, creating
+bar charts that show how allergy patterns vary by race (White, Black,
+Asian/Pacific Islander, Other, Unknown) and ethnicity (Hispanic,
+Non-Hispanic). It keeps consistency with scaling and ordering of
+allergens based on their initial prevalence.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate allergen presence by race (START)}
+\NormalTok{race\_allergen\_analysis\_start }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(RACE\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{peanut =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(PEANUT\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{egg =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGG\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(MILK\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{wheat =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(WHEAT\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{shellfish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SHELLFISH\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FISH\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{soy =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SOY\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  )}
+
+\CommentTok{\# Calculate allergen presence by race (}\RegionMarkerTok{END}\CommentTok{)}
+\NormalTok{race\_allergen\_analysis\_end }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(RACE\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{peanut =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(PEANUT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{egg =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGG\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(MILK\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{wheat =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(WHEAT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{shellfish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SHELLFISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{soy =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SOY\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  )}
+
+\CommentTok{\# Get maximum prevalence and consistent ordering for race}
+\NormalTok{max\_prevalence\_race }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
+  \FunctionTok{gather}\NormalTok{(race\_allergen\_analysis\_start, }\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{RACE\_FACTOR)}\SpecialCharTok{$}\NormalTok{prevalence,}
+  \FunctionTok{gather}\NormalTok{(race\_allergen\_analysis\_end, }\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{RACE\_FACTOR)}\SpecialCharTok{$}\NormalTok{prevalence}
+\NormalTok{))}
+
+\NormalTok{allergen\_order\_race }\OtherTok{\textless{}{-}}\NormalTok{ race\_allergen\_analysis\_start }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{RACE\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(allergen) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_prev =} \FunctionTok{sum}\NormalTok{(prevalence)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(total\_prev)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{(allergen)}
+
+\CommentTok{\# Visualizations for race}
+\FunctionTok{ggplot}\NormalTok{(race\_allergen\_analysis\_start }\SpecialCharTok{\%\textgreater{}\%} 
+       \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{RACE\_FACTOR)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(allergen, }\AttributeTok{levels =}\NormalTok{ allergen\_order\_race), }
+               \AttributeTok{y =}\NormalTok{ prevalence, }\AttributeTok{fill =}\NormalTok{ RACE\_FACTOR), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, max\_prevalence\_race) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Prevalence by Race (START)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergen Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(race\_allergen\_analysis\_end }\SpecialCharTok{\%\textgreater{}\%} 
+       \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{RACE\_FACTOR)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(allergen, }\AttributeTok{levels =}\NormalTok{ allergen\_order\_race), }
+               \AttributeTok{y =}\NormalTok{ prevalence, }\AttributeTok{fill =}\NormalTok{ RACE\_FACTOR), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, max\_prevalence\_race) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Prevalence by Race (END)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergen Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-7-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate allergen presence by ethnicity (START and }\RegionMarkerTok{END}\CommentTok{)}
+\NormalTok{ethnicity\_allergen\_analysis\_start }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(ETHNICITY\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{peanut =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(PEANUT\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{egg =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGG\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(MILK\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{wheat =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(WHEAT\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{shellfish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SHELLFISH\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FISH\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{soy =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SOY\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  )}
+
+\NormalTok{ethnicity\_allergen\_analysis\_end }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(ETHNICITY\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{peanut =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(PEANUT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{egg =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGG\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(MILK\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{wheat =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(WHEAT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{shellfish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SHELLFISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{soy =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SOY\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  )}
+
+\CommentTok{\# Get maximum prevalence and consistent ordering for ethnicity}
+\NormalTok{max\_prevalence\_ethnicity }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
+  \FunctionTok{gather}\NormalTok{(ethnicity\_allergen\_analysis\_start, }\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{ETHNICITY\_FACTOR)}\SpecialCharTok{$}\NormalTok{prevalence,}
+  \FunctionTok{gather}\NormalTok{(ethnicity\_allergen\_analysis\_end, }\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{ETHNICITY\_FACTOR)}\SpecialCharTok{$}\NormalTok{prevalence}
+\NormalTok{))}
+
+\NormalTok{allergen\_order\_ethnicity }\OtherTok{\textless{}{-}}\NormalTok{ ethnicity\_allergen\_analysis\_start }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{ETHNICITY\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(allergen) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_prev =} \FunctionTok{sum}\NormalTok{(prevalence)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(total\_prev)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{(allergen)}
+
+\CommentTok{\# Visualizations for ethnicity}
+\FunctionTok{ggplot}\NormalTok{(ethnicity\_allergen\_analysis\_start }\SpecialCharTok{\%\textgreater{}\%} 
+       \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{ETHNICITY\_FACTOR)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(allergen, }\AttributeTok{levels =}\NormalTok{ allergen\_order\_ethnicity), }
+               \AttributeTok{y =}\NormalTok{ prevalence, }\AttributeTok{fill =}\NormalTok{ ETHNICITY\_FACTOR), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, max\_prevalence\_ethnicity) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Prevalence by Ethnicity (START)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergen Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-7-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(ethnicity\_allergen\_analysis\_end }\SpecialCharTok{\%\textgreater{}\%} 
+       \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{ETHNICITY\_FACTOR)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(allergen, }\AttributeTok{levels =}\NormalTok{ allergen\_order\_ethnicity), }
+               \AttributeTok{y =}\NormalTok{ prevalence, }\AttributeTok{fill =}\NormalTok{ ETHNICITY\_FACTOR), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, max\_prevalence\_ethnicity) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Prevalence by Ethnicity (END)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergen Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-7-4.pdf}
+
+This code calculates and visualizes the prevalence of different
+allergies between Medicaid and non-Medicaid patients at both the start
+and end of the observation period, creating side-by-side bar charts that
+show how allergy patterns differ based on insurance status. It keeps
+consistency with scaling and ordering of allergens based on their
+initial prevalence.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate allergen presence by payer status (START)}
+\NormalTok{payer\_allergen\_analysis\_start }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(PAYER\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{peanut =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(PEANUT\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{egg =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGG\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(MILK\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{wheat =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(WHEAT\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{shellfish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SHELLFISH\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FISH\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{soy =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SOY\_ALG\_START))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  )}
+
+\CommentTok{\# Calculate allergen presence by payer status (}\RegionMarkerTok{END}\CommentTok{)}
+\NormalTok{payer\_allergen\_analysis\_end }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(PAYER\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{peanut =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(PEANUT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{egg =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGG\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(MILK\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{wheat =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(WHEAT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{shellfish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SHELLFISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{soy =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SOY\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  )}
+
+\CommentTok{\# Get maximum prevalence and consistent ordering}
+\NormalTok{max\_prevalence\_payer }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
+  \FunctionTok{gather}\NormalTok{(payer\_allergen\_analysis\_start, }\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{PAYER\_FACTOR)}\SpecialCharTok{$}\NormalTok{prevalence,}
+  \FunctionTok{gather}\NormalTok{(payer\_allergen\_analysis\_end, }\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{PAYER\_FACTOR)}\SpecialCharTok{$}\NormalTok{prevalence}
+\NormalTok{))}
+
+\NormalTok{allergen\_order\_payer }\OtherTok{\textless{}{-}}\NormalTok{ payer\_allergen\_analysis\_start }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{PAYER\_FACTOR) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(allergen) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_prev =} \FunctionTok{sum}\NormalTok{(prevalence)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(total\_prev)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{(allergen)}
+
+\CommentTok{\# Create visualization (START)}
+\FunctionTok{ggplot}\NormalTok{(payer\_allergen\_analysis\_start }\SpecialCharTok{\%\textgreater{}\%} 
+       \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{PAYER\_FACTOR)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(allergen, }\AttributeTok{levels =}\NormalTok{ allergen\_order\_payer), }
+               \AttributeTok{y =}\NormalTok{ prevalence, }\AttributeTok{fill =}\NormalTok{ PAYER\_FACTOR), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, max\_prevalence\_payer) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Prevalence by Medicaid Status (START)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergen Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create visualization (}\RegionMarkerTok{END}\CommentTok{)}
+\FunctionTok{ggplot}\NormalTok{(payer\_allergen\_analysis\_end }\SpecialCharTok{\%\textgreater{}\%} 
+       \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{PAYER\_FACTOR)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(allergen, }\AttributeTok{levels =}\NormalTok{ allergen\_order\_payer), }
+               \AttributeTok{y =}\NormalTok{ prevalence, }\AttributeTok{fill =}\NormalTok{ PAYER\_FACTOR), }
+           \AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{, max\_prevalence\_payer) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Prevalence by Medicaid Status (END)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergen Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-8-2.pdf}
+
+This code creates individual scatter plots for each type of allergy
+(peanut, egg, milk, etc.) showing how their prevalence changes across
+different birth years, with each plot including a linear trend line and
+confidence interval to visualize the overall pattern of allergy rates
+over time.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# List of allergens}
+\NormalTok{allergens }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"PEANUT"}\NormalTok{, }\StringTok{"EGG"}\NormalTok{, }\StringTok{"MILK"}\NormalTok{, }\StringTok{"WHEAT"}\NormalTok{, }\StringTok{"SHELLFISH"}\NormalTok{, }\StringTok{"FISH"}\NormalTok{, }\StringTok{"SOY"}\NormalTok{)}
+
+\CommentTok{\# Function to create a plot for a single allergen with trend line}
+\NormalTok{create\_allergen\_plot }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(allergen) \{}
+\NormalTok{  allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(BIRTH\_YEAR) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{prevalence =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(}\FunctionTok{get}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(allergen, }\StringTok{"\_ALG\_END"}\NormalTok{))))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ BIRTH\_YEAR, }\AttributeTok{y =}\NormalTok{ prevalence)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}  \CommentTok{\# Add trend line with confidence interval}
+    \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste}\NormalTok{(allergen, }\StringTok{"Allergy Prevalence by Birth Year (END)"}\NormalTok{),}
+         \AttributeTok{x =} \StringTok{"Birth Year"}\NormalTok{,}
+         \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{))}
+\NormalTok{\}}
+
+\CommentTok{\# Create and display plots}
+\NormalTok{allergen\_plots }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(allergens, create\_allergen\_plot)}
+\ControlFlowTok{for}\NormalTok{ (plot }\ControlFlowTok{in}\NormalTok{ allergen\_plots) \{}
+  \FunctionTok{print}\NormalTok{(plot)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-9-2.pdf}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-9-3.pdf}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-9-4.pdf}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-9-5.pdf}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-9-6.pdf}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-9-7.pdf}
+
+This code analyzes and visualizes the relationship between asthma and
+allergies at the end of the observation period in two ways: first by
+showing the overall proportion of allergens in asthma vs non-asthma
+patients, and then breaking down the specific types of allergies present
+in asthma patients, with both visualizations using percentage scales for
+clear interpretation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate asthma and allergen presence for }\RegionMarkerTok{END}
+\NormalTok{asthma\_allergen\_analysis\_end }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{has\_asthma =} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(ASTHMA\_END),}
+    \AttributeTok{has\_allergen =} \FunctionTok{rowSums}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(}\FunctionTok{select}\NormalTok{(., }\FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_ALG\_END"}\NormalTok{)))) }\SpecialCharTok{\textgreater{}} \DecValTok{0}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(has\_asthma) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{allergen\_presence =} \FunctionTok{mean}\NormalTok{(has\_allergen),}
+    \AttributeTok{count =} \FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{.groups =} \StringTok{\textquotesingle{}drop\textquotesingle{}}
+\NormalTok{  )}
+
+\CommentTok{\# Create visualizations for }\RegionMarkerTok{END}
+\FunctionTok{ggplot}\NormalTok{(asthma\_allergen\_analysis\_end, }
+       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(has\_asthma), }\AttributeTok{y =}\NormalTok{ allergen\_presence)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Presence by Asthma Status (END)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Has Asthma"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Proportion with Allergens"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\NormalTok{percent)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Detailed allergen breakdown for asthma patients (}\RegionMarkerTok{END}\CommentTok{)}
+\NormalTok{asthma\_specific\_allergens\_end }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(ASTHMA\_END)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{peanut =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(PEANUT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{egg =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGG\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(MILK\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{wheat =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(WHEAT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{shellfish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SHELLFISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{soy =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SOY\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{)}
+
+\CommentTok{\# Create visualizations for specific allergens (}\RegionMarkerTok{END}\CommentTok{)}
+\FunctionTok{ggplot}\NormalTok{(asthma\_specific\_allergens\_end, }
+       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(allergen, prevalence), }\AttributeTok{y =}\NormalTok{ prevalence)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Distribution in Asthma Patients (END)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergen Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\NormalTok{percent)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-10-2.pdf}
+
+This code analyzes and visualizes the relationship between allergic
+rhinitis and allergies at the end of the observation period in two ways:
+first showing the overall proportion of allergens in rhinitis vs
+non-rhinitis patients, and then breaking down the specific types of
+allergies present in rhinitis patients, with both visualizations using
+percentage scales for clear interpretation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate rhinitis and allergen presence for }\RegionMarkerTok{END}
+\NormalTok{rhinitis\_allergen\_analysis\_end }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{has\_rhinitis =} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(ALLERGIC\_RHINITIS\_END),}
+    \AttributeTok{has\_allergen =} \FunctionTok{rowSums}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(}\FunctionTok{select}\NormalTok{(., }\FunctionTok{ends\_with}\NormalTok{(}\StringTok{"\_ALG\_END"}\NormalTok{)))) }\SpecialCharTok{\textgreater{}} \DecValTok{0}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(has\_rhinitis) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{allergen\_presence =} \FunctionTok{mean}\NormalTok{(has\_allergen),}
+    \AttributeTok{count =} \FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{.groups =} \StringTok{\textquotesingle{}drop\textquotesingle{}}
+\NormalTok{  )}
+
+\CommentTok{\# Create visualizations for }\RegionMarkerTok{END}
+\FunctionTok{ggplot}\NormalTok{(rhinitis\_allergen\_analysis\_end, }
+       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{factor}\NormalTok{(has\_rhinitis), }\AttributeTok{y =}\NormalTok{ allergen\_presence)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Presence by Allergic Rhinitis Status (END)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Has Allergic Rhinitis"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Proportion with Allergens"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\NormalTok{percent)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Detailed allergen breakdown for rhinitis patients (}\RegionMarkerTok{END}\CommentTok{)}
+\NormalTok{rhinitis\_allergen\_analysis\_end }\OtherTok{\textless{}{-}}\NormalTok{ allergy\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(ALLERGIC\_RHINITIS\_END)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{peanut =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(PEANUT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{egg =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(EGG\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{milk =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(MILK\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{wheat =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(WHEAT\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{shellfish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SHELLFISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{fish =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(FISH\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{soy =} \FunctionTok{sum}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(SOY\_ALG\_END))}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"allergen"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prevalence"}\NormalTok{)}
+
+\CommentTok{\# Create visualizations for specific allergens (}\RegionMarkerTok{END}\CommentTok{)}
+\FunctionTok{ggplot}\NormalTok{(rhinitis\_allergen\_analysis\_end, }
+       \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(allergen, prevalence), }\AttributeTok{y =}\NormalTok{ prevalence)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Allergen Distribution in Allergic Rhinitis Patients (END)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Allergen Type"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Prevalence"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\NormalTok{percent)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{allergy_analysis_files/figure-latex/unnamed-chunk-11-2.pdf}
+
+\section{Conclusion}\label{conclusion}
+
+The analysis of food allergies and their relationships reveals several
+key findings:
+
+\subsubsection{Overall Prevalence
+Patterns}\label{overall-prevalence-patterns}
+
+The prevalence analysis shows peanut allergies are most common
+(\textgreater0.02 prevalence), followed by milk and egg allergies, while
+Brazil nut and other tree nut allergies show the lowest prevalence
+(\textless0.005). This hierarchy of allergen prevalence remains somewhat
+consistent from start to end of observation.
+
+\subsubsection{Demographic Distribution}\label{demographic-distribution}
+
+\begin{itemize}
+\tightlist
+\item
+  Males show consistently higher prevalence of all food allergies
+  compared to females
+\item
+  Asian/Pacific Islander populations show notably higher rates of egg
+  and milk allergies (around 0.02 prevalence difference) compared to
+  other racial groups
+\item
+  Racial disparities are particularly evident in egg allergies, where
+  Asian/Pacific Islanders show significantly higher prevalence than the
+  rest of the population
+\end{itemize}
+
+\subsubsection{Temporal Trends}\label{temporal-trends}
+
+The allergy prevalence analysis by birth year shows a clear upward trend
+from 1980's through the 2010's, with prevalence increasing from nearly 0
+to upwards of 0.025, suggesting environmental or diagnostic factors may
+be influencing allergy development over time.
+
+\subsubsection{Clinical Implications}\label{clinical-implications}
+
+These findings support the original conclusions while adding new
+insights:
+
+\begin{itemize}
+\tightlist
+\item
+  Food allergy prevalence matches previous estimates.
+\item
+  Higher rates of peanut, milk, egg, shellfish, and soy allergies than
+  prior studies
+\item
+  Food allergies has a connection to respiratory allergy risks
+\item
+  The data supports targeted screening strategies, particularly for:
+  Male patients, Asian/Pacific Islander populations, patients born in
+  more recent years, and those with multiple allergies
+\end{itemize}
+
+This analysis provides valuable insights for healthcare providers in
+predicting allergy patterns and managing patient care, particularly in
+identifying high-risk populations.
+
+\section{References}\label{references}
+
+\href{https://zenodo.org/records/44529}{Zenodo}
+
+Hill, David A et al.~``The epidemiologic characteristics of healthcare
+provider-diagnosed eczema, asthma, allergic rhinitis, and food allergy
+in children: a retrospective cohort study.'' BMC pediatrics vol.~16 133.
+20 Aug.~2016, \url{doi:10.1186/s12887-016-0673-z}
+
+\href{https://pmc.ncbi.nlm.nih.gov/articles/PMC4992234/}{Link to PMC
+Article}
+
+\end{document}

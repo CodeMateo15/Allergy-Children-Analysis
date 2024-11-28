@@ -1,16 +1,16 @@
 ---
-title: "Trends with Food Allergies, Asthma, and Allergic Rhinitis"
+title: "Trends with Food Allergies, Asthma, and Allergic Rhinitis in Children"
 author: "Mateo Biggs"
-output: allergy_notebook
+output: pdf_document
 ---
 
 # Introduction
 
-This report investigates food allergies in children using a publicly available data set. The goal is to identify common allergens and trends over time, providing insights for causes and the impact of food allergies.
+Food allergies are a growing public health concern, particularly among children, where their prevalence has been steadily increasing in recent decades. This report analyzes a large data set of over 330,000 pediatric medical records to uncover trends in food allergies, asthma, and allergic rhinitis. By identifying common allergens and tracking their prevalence over time, the analysis aims to shed light on potential causes, demographic patterns, and the broader impact of food allergies on children’s health. These insights can inform future research, healthcare interventions, and policy decisions.
 
 # Methodology
 
--   Data Source: Data set from Zenodo containing +330,000 children medical records from The Children’s Hospital of Philadelphia.
+-   Data Source: Data set from [Zenodo](https://zenodo.org/records/44529) containing +330,000 children medical records from The Children’s Hospital of Philadelphia.
 -   Tools: R Studio, `tidyverse`, `lubridate`, `ggplot2`, `corrplot`.
 -   Steps: Data cleaning, visualization, statistical analysis.
 
@@ -23,7 +23,7 @@ library(lubridate)
 library(ggplot2)
 ```
 
-Here is the .csv file that holds the data for our allergen analysis. The file comes from Zenodo, and it analyzes about 333,000 children by birth year (starting/end age), gender, race/ethnicity, payer (if medicaid or not), allergen (start/end), and associated illnesses (eczema, asthma, and rhinitis). Removes starting age that are in the negatives and Tree nuts allergen as it is an outlier.
+Here is the .csv file that holds the data for our allergen analysis. The file comes from [Zenodo](https://zenodo.org/records/44529), and it analyzes about 333,000 children by birth year (starting/end age), gender, race/ethnicity, payer (if medicaid or not), allergen (start/end), and associated illnesses (eczema, asthma, and rhinitis). Removes starting age that are in the negatives and the tree nut allergen as it is an outlier.
 
 ```{r}
 # Read and examine data
@@ -593,9 +593,9 @@ The prevalence analysis shows peanut allergies are most common (\>0.02 prevalenc
 
 ### Demographic Distribution
 
-- Males show consistently higher prevalence of all food allergies compared to females 
-- Asian/Pacific Islander populations show notably higher rates of egg and milk allergies (around 0.02 prevalence differene) compared to other racial groups 
-- Racial disparities are particularly evident in egg allergies, where Asian/Pacific Islanders show significantly higher prevalence than the rest of the population
+-   Males show consistently higher prevalence of all food allergies compared to females
+-   Asian/Pacific Islander populations show notably higher rates of egg and milk allergies (around 0.02 prevalence difference) compared to other racial groups
+-   Racial disparities are particularly evident in egg allergies, where Asian/Pacific Islanders show significantly higher prevalence than the rest of the population
 
 ### Temporal Trends
 
