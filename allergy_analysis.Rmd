@@ -1,9 +1,20 @@
 ---
-title: "Allergy Dataset Analysis"
+title: "Trends with Food Allergies, Asthma, and Allergic Rhinitis"
 output: allergy_notebook
 ---
 
+# Introduction
+
+This report investigates food allergies in children using a publicly available data set. The goal is to identify common allergens and trends over time, providing insights for causes and the impact of food allergies.
+
+# Methodology
+
+-   Data Source: Data set from Zenodo containing +330,000 children medical records from The Children’s Hospital of Philadelphia.
+-   Tools: R Studio, `tidyverse`, `lubridate`, `ggplot2`, `corrplot`.
+-   Steps: Data cleaning, visualization, statistical analysis.
+
 Run once to have required packages:
+
 ```{r}
 # Load required libraries
 library(tidyverse)
@@ -11,12 +22,8 @@ library(lubridate)
 library(ggplot2)
 ```
 
+Here is the .csv file that holds the data for our allergen analysis. The file comes from Zenodo, and it analyzes about 333,000 children by birth year (starting/end age), gender, race/ethnicity, payer (if medicaid or not), allergen (start/end), and associated illnesses (eczema, asthma, and rhinitis). Removes starting age that are in the negatives and Tree nuts allergen as it is an outlier.
 
-Here is the .csv file that holds the data for our allergen analysis. The file comes from Zenodo and comes from this study:
-
-Hill DA, Grundmeier RW, Ram G, Spergel JM. The epidemiologic characteristics of healthcare provider-diagnosed eczema, asthma, allergic rhinitis, and food allergy in children: a retrospective cohort study. BMC Pediatr. 2016 Aug 20;16:133. doi: 10.1186/s12887-016-0673-z. PMID: 27542726; PMCID: PMC4992234.
-
-It analyzes about 333,000 children by birth year (starting/end age), gender, race/ethnicity, payer (if medicaid or not), allergen (start/end), and associated illnesses (eczema, asthma, and rhinitis). Removes starting age that are in the negatives
 ```{r}
 # Read and examine data
 allergy_data <- read.csv("food-allergy-analysis-Zenodo.csv", stringsAsFactors = FALSE)
@@ -45,27 +52,8 @@ allergy_data <- allergy_data %>%
 str(allergy_data)
 ```
 
-```{r}
-# Create function to analyze onset patterns (START)
-analyze_onset_patterns_start <- function(df) {
-  df %>%
-    select(ends_with("_START")) %>%
-    select(-c(AGE_START_YEARS)) %>%
-    gather(key = "allergy_type", value = "onset_age") %>%
-    filter(!is.na(onset_age)) %>%
-    mutate(allergy_type = gsub("_START", "", allergy_type))
-}
-
-# Create function to analyze onset patterns (END)
-analyze_onset_patterns_end <- function(df) {
-  df %>%
-    select(ends_with("_END")) %>%
-    select(-c(AGE_START_YEARS)) %>%
-    gather(key = "allergy_type", value = "onset_age") %>%
-    filter(!is.na(onset_age)) %>%
-    mutate(allergy_type = gsub("_END", "", allergy_type))
-}
-```
+# Results
+This code creates two histograms showing the age distribution of patients at the start (in blue) and end (in red) of the observation period, with counts displayed in thousands. It also calculates seperately the minimum and maximum ages for both timepoints.
 
 ```{r}
 # Age distribution by start visualization (counts in thousands)
@@ -91,95 +79,8 @@ range_age_start <- range(ageStart_data, na.rm = TRUE)
 range_age_end <- range(ageEnd_data, na.rm = TRUE)
 print(range_age_start)
 print(range_age_end)
-
 ```
-
-
-```{r}
-# Create binary columns for each allergy (START)
-allergy_binary_start <- allergy_data %>%
-  mutate(across(ends_with("_START"), 
-                ~ifelse(is.na(.), 0, 1))) %>%
-  select(ends_with("_START"))
-
-# Create binary columns for each allergy (END)
-allergy_binary_end <- allergy_data %>%
-  mutate(across(ends_with("_START"), 
-                ~ifelse(is.na(.), 0, 1))) %>%
-  select(ends_with("_END"))
-
-# Calculate comorbidity correlation (START)
-allergy_correlation_start <- cor(allergy_binary)
-
-# Calculate comorbidity correlation (END)
-allergy_correlation_end <- cor(allergy_binary)
-```
-
-
-
-```{r}
-# Properly create factors with explicit levels (START)
-model_data <- allergy_data %>%
-  mutate(
-    # Create binary outcome
-    has_food_allergy = if_else(
-      rowSums(!is.na(select(., ends_with("_ALG_START")))) > 0,
-      1, 
-      0
-    ),
-    # Convert factors with explicit level preservation
-    GENDER_FACTOR = factor(GENDER_FACTOR, levels = unique(GENDER_FACTOR)),
-    RACE_FACTOR = factor(RACE_FACTOR, levels = unique(RACE_FACTOR)),
-    ETHNICITY_FACTOR = factor(ETHNICITY_FACTOR, levels = unique(ETHNICITY_FACTOR)),
-    PAYER_FACTOR = factor(PAYER_FACTOR, levels = unique(PAYER_FACTOR))
-  ) %>%
-  # Drop empty factor levels
-  droplevels()
-
-# Properly create factors with explicit levels (END)
-model_data <- allergy_data %>%
-  mutate(
-    # Create binary outcome
-    has_food_allergy = if_else(
-      rowSums(!is.na(select(., ends_with("_ALG_END")))) > 0,
-      1, 
-      0
-    ),
-    # Convert factors with explicit level preservation
-    GENDER_FACTOR = factor(GENDER_FACTOR, levels = unique(GENDER_FACTOR)),
-    RACE_FACTOR = factor(RACE_FACTOR, levels = unique(RACE_FACTOR)),
-    ETHNICITY_FACTOR = factor(ETHNICITY_FACTOR, levels = unique(ETHNICITY_FACTOR)),
-    PAYER_FACTOR = factor(PAYER_FACTOR, levels = unique(PAYER_FACTOR))
-  ) %>%
-  # Drop empty factor levels
-  droplevels()
-
-# Check factor levels after conversion (just START)
-print("Factor Levels After Conversion:")
-print(levels(model_data$GENDER_FACTOR))
-print(levels(model_data$RACE_FACTOR))
-print(levels(model_data$ETHNICITY_FACTOR))
-print(levels(model_data$PAYER_FACTOR))
-
-# Only proceed with modeling if factors have multiple levels (only START)
-valid_factors <- names(which(sapply(model_data, function(x) 
-  is.factor(x) && length(levels(x)) > 1)))
-
-if (length(valid_factors) > 0) {
-  formula_str <- paste("has_food_allergy ~", 
-                      paste(valid_factors, collapse = " + "))
-  risk_model <- glm(
-    as.formula(formula_str),
-    family = binomial(),
-    data = model_data
-  )
-  print(summary(risk_model))
-} else {
-  print("Warning: Check your data - no valid factor variables found")
-}
-```
-
-
+This code calculates and visualizes the prevalence of different allergies at both the start and end of the observation period, creating two bar plots (red for start, blue for end) with consistent y-axis scaling and ordering of allergens based on their initial prevalence, allowing for direct comparison of how allergy patterns change over time.
 
 ```{r}
 # Calculate prevalence of each allergy type (START)
@@ -229,7 +130,51 @@ ggplot(allergy_prevalence_end,
        x = "Allergy Type",
        y = "Prevalence")
 ```
+This code creates a correlation matrix heatmap showing pairwise relationships between different food allergens, where blue indicates negative correlation, white indicates no correlation, and red indicates positive correlation, with correlation coefficients displayed numerically on the visualization. For the second part, the code calculates and visualizes how often pairs of allergies occur together in children (like milk with egg, or fish with shellfish), displaying the results as a horizontal bar chart with the most frequent combinations at the top. While the heatmap shows correlation coefficients between all possible allergy pairs (with values from -1 to 1), the bar chart specifically quantifies how often selected allergy pairs appear together in patients
+```{r}
+# Create binary columns for each allergy with cleaner names
+allergy_binary <- allergy_data %>%
+  mutate(across(ends_with("_ALG_START"),
+         ~ifelse(is.na(.), 0, 1))) %>%
+  select(ends_with("_ALG_START")) %>%
+  rename_with(~str_remove(., "_ALG_START"))
 
+# Calculate and visualize correlation matrix
+library(corrplot)
+allergy_correlation <- cor(allergy_binary)
+corrplot(allergy_correlation, 
+         method = "color",
+         type = "upper",
+         tl.col = "black",
+         addCoef.col = "black",
+         number.cex = 0.7,       
+         tl.srt = 45,            
+         tl.cex = 0.8,     
+         col = colorRampPalette(c("#4575B4", "white", "#D73027"))(100),  
+         diag = FALSE)          
+
+# Calculate co-occurrence frequencies
+allergy_pairs <- allergy_binary %>%
+  summarise(
+    milk_egg = sum(MILK == 1 & EGG == 1)/n(),
+    milk_soy = sum(MILK == 1 & SOY == 1)/n(),
+    peanut_egg = sum(PEANUT == 1 & EGG == 1)/n(),
+    peanut_pistachio = sum(PEANUT == 1 & PISTACH == 1)/n(),
+    fish_shellfish = sum(FISH == 1 & SHELLFISH == 1)/n(),
+    fish_pecan = sum(FISH == 1 & PECAN == 1)/n()
+  )
+
+# Visualize co-occurrence
+allergy_pairs %>%
+  gather(key = "pair", value = "frequency") %>%
+  ggplot(aes(x = reorder(pair, frequency), y = frequency)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Examples of Allergy Co-occurrence Frequency",
+       x = "Allergy Pair",
+       y = "Co-occurrence Frequency")
+```
 
 ```{r}
 # Calculate allergen presence by gender with types (START)
@@ -495,7 +440,6 @@ ggplot(payer_allergen_analysis_end %>%
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-
 ```{r}
 # List of allergens
 allergens <- c("PEANUT", "EGG", "MILK", "WHEAT", "SHELLFISH", "FISH", "SOY")
@@ -509,7 +453,7 @@ create_allergen_plot <- function(allergen) {
     geom_point() +
     geom_smooth(method = "lm", se = TRUE) +  # Add trend line with confidence interval
     theme_minimal() +
-    labs(title = paste(allergen, "Allergy Prevalence by Birth Year"),
+    labs(title = paste(allergen, "Allergy Prevalence by Birth Year (END)"),
          x = "Birth Year",
          y = "Prevalence") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -521,7 +465,6 @@ for (plot in allergen_plots) {
   print(plot)
 }
 ```
-
 
 ```{r}
 # Calculate asthma and allergen presence for START and END
@@ -618,3 +561,106 @@ ggplot(asthma_specific_allergens_end,
   scale_y_continuous(labels = scales::percent)
 ```
 
+```{r}
+# Calculate rhinitis and allergen presence for START and END
+rhinitis_allergen_analysis_start <- allergy_data %>%
+  mutate(
+    has_rhinitis = !is.na(ALLERGIC_RHINITIS_START),
+    has_allergen = rowSums(!is.na(select(., ends_with("_ALG_START")))) > 0
+  ) %>%
+  group_by(has_rhinitis) %>%
+  summarise(
+    allergen_presence = mean(has_allergen),
+    count = n(),
+    .groups = 'drop'
+  )
+
+rhinitis_allergen_analysis_end <- allergy_data %>%
+  mutate(
+    has_rhinitis = !is.na(ALLERGIC_RHINITIS_END),
+    has_allergen = rowSums(!is.na(select(., ends_with("_ALG_END")))) > 0
+  ) %>%
+  group_by(has_rhinitis) %>%
+  summarise(
+    allergen_presence = mean(has_allergen),
+    count = n(),
+    .groups = 'drop'
+  )
+
+# Create visualizations for START and END
+ggplot(rhinitis_allergen_analysis_start, 
+       aes(x = factor(has_rhinitis), y = allergen_presence)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  theme_minimal() +
+  labs(title = "Allergen Presence by Allergic Rhinitis Status (START)",
+       x = "Has Allergic Rhinitis",
+       y = "Proportion with Allergens") +
+  scale_y_continuous(labels = scales::percent)
+
+ggplot(rhinitis_allergen_analysis_end, 
+       aes(x = factor(has_rhinitis), y = allergen_presence)) +
+  geom_bar(stat = "identity", fill = "darkblue") +
+  theme_minimal() +
+  labs(title = "Allergen Presence by Allergic Rhinitis Status (END)",
+       x = "Has Allergic Rhinitis",
+       y = "Proportion with Allergens") +
+  scale_y_continuous(labels = scales::percent)
+
+# Detailed allergen breakdown for rhinitis patients (START)
+rhinitis_allergen_analysis_start <- allergy_data %>%
+  filter(!is.na(ALLERGIC_RHINITIS_START)) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_START))/n(),
+    egg = sum(!is.na(EGG_ALG_START))/n(),
+    milk = sum(!is.na(MILK_ALG_START))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_START))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_START))/n(),
+    fish = sum(!is.na(FISH_ALG_START))/n(),
+    soy = sum(!is.na(SOY_ALG_START))/n()
+  ) %>%
+  gather(key = "allergen", value = "prevalence")
+
+# Detailed allergen breakdown for rhinitis patients (END)
+rhinitis_allergen_analysis_end <- allergy_data %>%
+  filter(!is.na(ALLERGIC_RHINITIS_END)) %>%
+  summarise(
+    peanut = sum(!is.na(PEANUT_ALG_END))/n(),
+    egg = sum(!is.na(EGG_ALG_END))/n(),
+    milk = sum(!is.na(MILK_ALG_END))/n(),
+    wheat = sum(!is.na(WHEAT_ALG_END))/n(),
+    shellfish = sum(!is.na(SHELLFISH_ALG_END))/n(),
+    fish = sum(!is.na(FISH_ALG_END))/n(),
+    soy = sum(!is.na(SOY_ALG_END))/n()
+  ) %>%
+  gather(key = "allergen", value = "prevalence")
+
+# Create visualizations for specific allergens (START and END)
+ggplot(rhinitis_allergen_analysis_start, 
+       aes(x = reorder(allergen, prevalence), y = prevalence)) +
+  geom_bar(stat = "identity", fill = "darkred") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Allergen Distribution in Allergic Rhinitis Patients (START)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  scale_y_continuous(labels = scales::percent)
+
+ggplot(rhinitis_allergen_analysis_end, 
+       aes(x = reorder(allergen, prevalence), y = prevalence)) +
+  geom_bar(stat = "identity", fill = "maroon") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Allergen Distribution in Allergic Rhinitis Patients (END)",
+       x = "Allergen Type",
+       y = "Prevalence") +
+  scale_y_continuous(labels = scales::percent)
+```
+# Conclusion
+
+# References
+
+[Zenodo](https://zenodo.org/records/44529)
+
+Hill, David A et al. “The epidemiologic characteristics of healthcare provider-diagnosed eczema, asthma, allergic rhinitis, and food allergy in children: a retrospective cohort study.” BMC pediatrics vol. 16 133. 20 Aug. 2016, <doi:10.1186/s12887-016-0673-z>
+
+[Link to PMC Article](https://pmc.ncbi.nlm.nih.gov/articles/PMC4992234/)
