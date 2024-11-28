@@ -475,6 +475,7 @@ for (plot in allergen_plots) {
   print(plot)
 }
 ```
+This code analyzes and visualizes the relationship between asthma and allergies at the end of the observation period in two ways: first by showing the overall proportion of allergens in asthma vs non-asthma patients, and then breaking down the specific types of allergies present in asthma patients, with both visualizations using percentage scales for clear interpretation.
 
 ```{r}
 # Calculate asthma and allergen presence for END
@@ -525,6 +526,8 @@ ggplot(asthma_specific_allergens_end,
        y = "Prevalence") +
   scale_y_continuous(labels = scales::percent)
 ```
+
+This code analyzes and visualizes the relationship between allergic rhinitis and allergies at the end of the observation period in two ways: first showing the overall proportion of allergens in rhinitis vs non-rhinitis patients, and then breaking down the specific types of allergies present in rhinitis patients, with both visualizations using percentage scales for clear interpretation.
 
 ```{r}
 # Calculate rhinitis and allergen presence for END
