@@ -249,6 +249,7 @@ ggplot(gender_allergen_analysis_end %>%
        y = "Prevalence") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+This code calculates and visualizes the prevalence of different allergies at both the start and end of the observation period, creating bar charts that show how allergy patterns vary by race (White, Black, Asian/Pacific Islander, Other, Unknown) and ethnicity (Hispanic, Non-Hispanic). It keeps consistency with scaling and ordering of allergens based on their initial prevalence.
 
 ```{r}
 # Calculate allergen presence by race (START)
@@ -378,6 +379,7 @@ ggplot(ethnicity_allergen_analysis_end %>%
        y = "Prevalence") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+This code calculates and visualizes the prevalence of different allergies between Medicaid and non-Medicaid patients at both the start and end of the observation period, creating side-by-side bar charts that show how allergy patterns differ based on insurance status. It keeps consistency with scaling and ordering of allergens based on their initial prevalence.
 
 ```{r}
 # Calculate allergen presence by payer status (START)
@@ -445,6 +447,8 @@ ggplot(payer_allergen_analysis_end %>%
        y = "Prevalence") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+This code creates individual scatter plots for each type of allergy (peanut, egg, milk, etc.) showing how their prevalence changes across different birth years, with each plot including a linear trend line and confidence interval to visualize the overall pattern of allergy rates over time.
+
 
 ```{r}
 # List of allergens
@@ -473,19 +477,7 @@ for (plot in allergen_plots) {
 ```
 
 ```{r}
-# Calculate asthma and allergen presence for START and END
-asthma_allergen_analysis_start <- allergy_data %>%
-  mutate(
-    has_asthma = !is.na(ASTHMA_START),
-    has_allergen = rowSums(!is.na(select(., ends_with("_ALG_START")))) > 0
-  ) %>%
-  group_by(has_asthma) %>%
-  summarise(
-    allergen_presence = mean(has_allergen),
-    count = n(),
-    .groups = 'drop'
-  )
-
+# Calculate asthma and allergen presence for END
 asthma_allergen_analysis_end <- allergy_data %>%
   mutate(
     has_asthma = !is.na(ASTHMA_END),
@@ -498,38 +490,15 @@ asthma_allergen_analysis_end <- allergy_data %>%
     .groups = 'drop'
   )
 
-# Create visualizations for START and END
-ggplot(asthma_allergen_analysis_start, 
-       aes(x = factor(has_asthma), y = allergen_presence)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  theme_minimal() +
-  labs(title = "Allergen Presence by Asthma Status (START)",
-       x = "Has Asthma",
-       y = "Proportion with Allergens") +
-  scale_y_continuous(labels = scales::percent)
-
+# Create visualizations for END
 ggplot(asthma_allergen_analysis_end, 
        aes(x = factor(has_asthma), y = allergen_presence)) +
-  geom_bar(stat = "identity", fill = "darkblue") +
+  geom_bar(stat = "identity", fill = "blue") +
   theme_minimal() +
   labs(title = "Allergen Presence by Asthma Status (END)",
        x = "Has Asthma",
        y = "Proportion with Allergens") +
   scale_y_continuous(labels = scales::percent)
-
-# Detailed allergen breakdown for asthma patients (START)
-asthma_specific_allergens_start <- allergy_data %>%
-  filter(!is.na(ASTHMA_START)) %>%
-  summarise(
-    peanut = sum(!is.na(PEANUT_ALG_START))/n(),
-    egg = sum(!is.na(EGG_ALG_START))/n(),
-    milk = sum(!is.na(MILK_ALG_START))/n(),
-    wheat = sum(!is.na(WHEAT_ALG_START))/n(),
-    shellfish = sum(!is.na(SHELLFISH_ALG_START))/n(),
-    fish = sum(!is.na(FISH_ALG_START))/n(),
-    soy = sum(!is.na(SOY_ALG_START))/n()
-  ) %>%
-  gather(key = "allergen", value = "prevalence")
 
 # Detailed allergen breakdown for asthma patients (END)
 asthma_specific_allergens_end <- allergy_data %>%
@@ -545,20 +514,10 @@ asthma_specific_allergens_end <- allergy_data %>%
   ) %>%
   gather(key = "allergen", value = "prevalence")
 
-# Create visualizations for specific allergens (START and END)
-ggplot(asthma_specific_allergens_start, 
-       aes(x = reorder(allergen, prevalence), y = prevalence)) +
-  geom_bar(stat = "identity", fill = "darkred") +
-  coord_flip() +
-  theme_minimal() +
-  labs(title = "Allergen Distribution in Asthma Patients (START)",
-       x = "Allergen Type",
-       y = "Prevalence") +
-  scale_y_continuous(labels = scales::percent)
-
+# Create visualizations for specific allergens (END)
 ggplot(asthma_specific_allergens_end, 
        aes(x = reorder(allergen, prevalence), y = prevalence)) +
-  geom_bar(stat = "identity", fill = "maroon") +
+  geom_bar(stat = "identity", fill = "red") +
   coord_flip() +
   theme_minimal() +
   labs(title = "Allergen Distribution in Asthma Patients (END)",
@@ -568,19 +527,7 @@ ggplot(asthma_specific_allergens_end,
 ```
 
 ```{r}
-# Calculate rhinitis and allergen presence for START and END
-rhinitis_allergen_analysis_start <- allergy_data %>%
-  mutate(
-    has_rhinitis = !is.na(ALLERGIC_RHINITIS_START),
-    has_allergen = rowSums(!is.na(select(., ends_with("_ALG_START")))) > 0
-  ) %>%
-  group_by(has_rhinitis) %>%
-  summarise(
-    allergen_presence = mean(has_allergen),
-    count = n(),
-    .groups = 'drop'
-  )
-
+# Calculate rhinitis and allergen presence for END
 rhinitis_allergen_analysis_end <- allergy_data %>%
   mutate(
     has_rhinitis = !is.na(ALLERGIC_RHINITIS_END),
@@ -593,38 +540,15 @@ rhinitis_allergen_analysis_end <- allergy_data %>%
     .groups = 'drop'
   )
 
-# Create visualizations for START and END
-ggplot(rhinitis_allergen_analysis_start, 
-       aes(x = factor(has_rhinitis), y = allergen_presence)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  theme_minimal() +
-  labs(title = "Allergen Presence by Allergic Rhinitis Status (START)",
-       x = "Has Allergic Rhinitis",
-       y = "Proportion with Allergens") +
-  scale_y_continuous(labels = scales::percent)
-
+# Create visualizations for END
 ggplot(rhinitis_allergen_analysis_end, 
        aes(x = factor(has_rhinitis), y = allergen_presence)) +
-  geom_bar(stat = "identity", fill = "darkblue") +
+  geom_bar(stat = "identity", fill = "blue") +
   theme_minimal() +
   labs(title = "Allergen Presence by Allergic Rhinitis Status (END)",
        x = "Has Allergic Rhinitis",
        y = "Proportion with Allergens") +
   scale_y_continuous(labels = scales::percent)
-
-# Detailed allergen breakdown for rhinitis patients (START)
-rhinitis_allergen_analysis_start <- allergy_data %>%
-  filter(!is.na(ALLERGIC_RHINITIS_START)) %>%
-  summarise(
-    peanut = sum(!is.na(PEANUT_ALG_START))/n(),
-    egg = sum(!is.na(EGG_ALG_START))/n(),
-    milk = sum(!is.na(MILK_ALG_START))/n(),
-    wheat = sum(!is.na(WHEAT_ALG_START))/n(),
-    shellfish = sum(!is.na(SHELLFISH_ALG_START))/n(),
-    fish = sum(!is.na(FISH_ALG_START))/n(),
-    soy = sum(!is.na(SOY_ALG_START))/n()
-  ) %>%
-  gather(key = "allergen", value = "prevalence")
 
 # Detailed allergen breakdown for rhinitis patients (END)
 rhinitis_allergen_analysis_end <- allergy_data %>%
@@ -640,20 +564,10 @@ rhinitis_allergen_analysis_end <- allergy_data %>%
   ) %>%
   gather(key = "allergen", value = "prevalence")
 
-# Create visualizations for specific allergens (START and END)
-ggplot(rhinitis_allergen_analysis_start, 
-       aes(x = reorder(allergen, prevalence), y = prevalence)) +
-  geom_bar(stat = "identity", fill = "darkred") +
-  coord_flip() +
-  theme_minimal() +
-  labs(title = "Allergen Distribution in Allergic Rhinitis Patients (START)",
-       x = "Allergen Type",
-       y = "Prevalence") +
-  scale_y_continuous(labels = scales::percent)
-
+# Create visualizations for specific allergens (END)
 ggplot(rhinitis_allergen_analysis_end, 
        aes(x = reorder(allergen, prevalence), y = prevalence)) +
-  geom_bar(stat = "identity", fill = "maroon") +
+  geom_bar(stat = "identity", fill = "red") +
   coord_flip() +
   theme_minimal() +
   labs(title = "Allergen Distribution in Allergic Rhinitis Patients (END)",
