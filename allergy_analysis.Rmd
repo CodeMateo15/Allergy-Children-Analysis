@@ -53,6 +53,7 @@ str(allergy_data)
 ```
 
 # Results
+
 This code creates two histograms showing the age distribution of patients at the start (in blue) and end (in red) of the observation period, with counts displayed in thousands. It also calculates seperately the minimum and maximum ages for both timepoints.
 
 ```{r}
