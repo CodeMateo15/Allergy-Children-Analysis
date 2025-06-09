@@ -4,6 +4,6 @@ This report investigates food allergies in children using a publicly available d
 
 # Methodology
 
--   Data Source: Data set from Zenodo containing +330,000 children medical records from The Children’s Hospital of Philadelphia.
+-   Data Source: Data set from Zenodo (https://zenodo.org/records/44529) containing +330,000 children medical records from The Children’s Hospital of Philadelphia.
 -   Tools: R Studio, `tidyverse`, `lubridate`, `ggplot2`, `corrplot`.
 -   Steps: Data cleaning, visualization, statistical analysis.
